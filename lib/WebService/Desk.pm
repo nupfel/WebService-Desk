@@ -33,7 +33,209 @@ Please refer to the API documentation at L<http://dev.desk.com/docs/api>
 
 =head1 SUBROUTINES/METHODS
 
-=head2 ping
+=head2 article
+
+=head2 articles
+
+=head2 create_article
+
+=head2 update_article
+
+=head2 delete_article
+
+=head2 search_article
+
+=head2 article_translations
+
+=head2 article_translation
+
+=head2 create_article_translation
+
+=head2 update_article_translation
+
+=head2 cases
+
+=head2 case
+
+=head2 search_case
+
+=head2 create_case
+
+=head2 update_case
+
+=head2 history
+
+=head2 message
+
+=head2 replies
+
+=head2 reply
+
+=head2 create_reply
+
+=head2 update_reply
+
+=head2 notes
+
+=head2 note
+
+=head2 create_note
+
+=head2 attachments
+
+=head2 attachment
+
+=head2 message_attachment
+
+=head2 reply_attachment
+
+=head2 create_attachment
+
+=head2 create_message_attachment
+
+=head2 create_reply_attachment
+
+=head2 delete_attachment
+
+=head2 delete_message_attachment
+
+=head2 delete_reply_attachment
+
+=head2 companies
+
+=head2 company
+
+=head2 create_company
+
+=head2 update_company
+
+=head2 custom_fields
+
+=head2 custom_field
+
+=head2 customers
+
+=head2 customer
+
+=head2 search_customer
+
+=head2 create_customer
+
+=head2 update_customer
+
+=head2 filters
+
+=head2 filter
+
+=head2 filter_cases
+
+=head2 groups
+
+=head2 group
+
+=head2 group_filters
+
+=head2 group_users
+
+=head2 mailboxes
+
+=head2 mailbox
+
+=head2 insight_meta
+
+=head2 create_report
+
+=head2 integration_urls
+
+=head2 integration_url
+
+=head2 create_integration_url
+
+=head2 update_integration_url
+
+=head2 delete_integration_url
+
+=head2 jobs
+
+=head2 job
+
+=head2 create_job
+
+=head2 labels
+
+=head2 label
+
+=head2 create_label
+
+=head2 update_label
+
+=head2 delete_label
+
+=head2 macros
+
+=head2 macro
+
+=head2 create_macro
+
+=head2 update_macro
+
+=head2 delete_macro
+
+=head2 actions
+
+=head2 action
+
+=head2 update_action
+
+=head2 rules
+
+=head2 rule
+
+=head2 site_settings
+
+=head2 site_setting
+
+=head2 system_message
+
+=head2 topics
+
+=head2 topic
+
+=head2 create_topic
+
+=head2 update_topic
+
+=head2 delete_topic
+
+=head2 topic_translations
+
+=head2 topic_translation
+
+=head2 create_topic_translation
+
+=head2 update_topic_translation
+
+=head2 delete_topic_translation
+
+=head2 twitter_accounts
+
+=head2 twitter_account
+
+=head2 tweets
+
+=head2 tweet
+
+=head2 create_tweet
+
+=head2 users
+
+=head2 user
+
+=head2 user_preferences
+
+=head2 user_preference
+
+=head2 update_user_preference
 
 =cut
 
@@ -41,94 +243,206 @@ has 'commands' => (
     is      => 'rw',
     default => sub {
         {
+            # articles
+            articles       => {},
+            article        => { path => 'articles/:id' },
+            create_article => { path => 'articles', method => 'POST' },
+            update_article => { path => 'articles/:id', method => 'PATCH' },
+            delete_article => { path => 'articles/:id', method => 'DELETE' },
+            search_article => {
+                path      => 'articles/search',
+                mandatory => ['text'],
+                optional  => ['topic_ids']
+            },
+            article_translations => { path => 'articles/:id/translations' },
+            article_translation =>
+                { path => 'articles/:id/translations/:locale' },
+            create_article_translation => {
+                path      => 'articles/:id/translations',
+                method    => 'POST',
+                mandatory => [ 'locale', 'subject' ]
+            },
+            update_article_translation => {
+                path   => 'articles/:id/translations/:locale',
+                method => 'PATCH'
+            },
+
             # cases
-            cases       => { path   => 'cases' },
-            case        => { path   => 'cases/:id' },
-            update_case => { method => 'PUT', path => 'cases/:id' },
+            cases       => {},
+            case        => { path => 'cases/:id' },
+            search_case => { path => 'cases/search' },
+            create_case => { method => 'POST', mandatory => ['message'] },
+            update_case => { path => 'cases/:id', method => 'PATCH' },
+            history      => { path => 'cases/:id/history' },
+            message      => { path => 'cases/:id/message' },
+            replies      => { path => 'cases/:id/replies' },
+            reply        => { path => 'cases/:case_id/replies/:id' },
+            create_reply => {
+                path      => 'cases/:case_id/replies',
+                method    => 'POST',
+                mandatory => ['body'],
+            },
+            update_reply =>
+                { path => 'cases/:case_id/replies/:id', method => 'PATCH' },
+            notes       => { path => 'cases/:case_id/notes' },
+            note        => { path => 'cases/:case_id/notes/:id' },
+            create_note => {
+                path      => 'cases/:case_id/notes',
+                method    => 'POST',
+                mandatory => ['body'],
+            },
+            attachments => { path => 'cases/:case_id/attachments' },
+            message_attachments =>
+                { path => 'cases/:case_id/message/attachments' },
+            reply_attachments =>
+                { path => 'cases/:case_id/replies/:id/attachments' },
+            attachment => { path => 'cases/:case_id/attachments/:id' },
+            message_attachment =>
+                { path => 'cases/:case_id/message/attachments/:id' },
+            reply_attachment =>
+                { path => 'cases/:case_id/replies/:reply_id/attachments/:id' },
+            create_attachment =>
+                { path => 'cases/:case_id/attachments', method => 'POST' },
+            create_message_attachment => {
+                path   => 'cases/:case_id/message/attachments',
+                method => 'POST',
+            },
+            create_reply_attachment => {
+                path   => 'cases/:case_id/replies/:reply_id/attachments',
+                method => 'POST',
+            },
+            delete_attachment => {
+                path   => 'cases/:case_id/attachments/:id',
+                method => 'DELETE',
+            },
+            delete_message_attachment => {
+                path   => 'cases/:case_id/message/attachments/:id',
+                method => 'DELETE',
+            },
+            delete_reply_attachment => {
+                path   => 'cases/:case_id/replies/:reply_id/attachments/:id',
+                method => 'DELETE',
+            },
+
+            # companies
+            companies      => {},
+            company        => { path => 'companies/:id' },
+            create_company => { method => 'POST', mandatory => ['name'] },
+            update_company => { path => 'companies/:id', method => 'PATCH' },
+
+            # custom fields
+            custom_fields => {},
+            custom_field  => { path => 'custom_fields/:id' },
 
             # customers
-            customers       => { path   => 'customers' },
-            customer        => { path   => 'customers/:id' },
-            create_customer => { method => 'POST', path => 'customers' },
-            update_customer => { method => 'PUT', path => 'customers/:id' },
-            create_customer_email => {
-                method    => 'POST',
-                path      => 'customers/:id/emails',
-                mandatory => ['email'],
-            },
-            update_customer_email => {
-                method    => 'PUT',
-                path      => 'customers/:id/emails/:email_id',
-                mandatory => ['email'],
-            },
-            create_customer_phone => {
-                method    => 'POST',
-                path      => 'customers/:id/phones',
-                mandatory => ['phone'],
-            },
-            update_customer_phone => {
-                method    => 'PUT',
-                path      => 'customers/:id/phones/:phone_id',
-                mandatory => ['phone'],
-            },
+            customers       => {},
+            customer        => { path => 'customers/:id' },
+            search_customer => { path => 'customers/search' },
+            create_customer => { method => 'POST' },
+            update_customer => { path => 'customers/:id', method => 'PATCH' },
 
-            interactions       => { path => 'interactions' },
-            create_interaction => {
-                method    => 'POST',
-                path      => 'interactions',
-                mandatory => ['interaction_subject'],
-            },
+            # filters
+            filters      => {},
+            filter       => { path => 'filters/:id' },
+            filter_cases => { path => 'filters/:id/cases' },
 
-            # users/groups
-            groups    => { path => 'groups' },
-            get_group => { path => 'groups/:id' },
-            users     => { path => 'users' },
-            get_user  => { path => 'users/:id' },
+            # groups
+            groups        => {},
+            group         => { path => 'groups/:id' },
+            group_filters => { path => 'groups/:id/filters' },
+            group_users   => { path => 'groups/:id/users' },
 
-            # topics
-            topics => { path => 'topics' },
-            topic  => { path => 'topics/:id' },
-            create_topic =>
-                { method => 'POST', path => 'topics', mandatory => ['name'], },
-            update_topic => { method => 'PUT', path => 'topics/:id' },
-            delete_topic => {
-                method => 'DELETE',
-                path   => 'topics/:id',
-            },
-            topic_articles => { path => 'topics/:id/articles', },
-            create_article => {
-                method    => 'POST',
-                path      => 'topics/:id/articles',
-                mandatory => ['subject'],
-            },
-            article        => { path => 'articles/:id' },
-            update_article => {
-                method => 'PUT',
-                path   => 'articles/:id',
-            },
-            delete_article => {
-                method => 'DELETE',
-                path   => 'articles/:id',
-            },
+            # inbound mailboxes
+            mailboxes => { path => 'mailboxes/inbound' },
+            mailbox   => { path => 'mailboxes/inbound/:id' },
+
+            # insights
+            insight_meta  => { path => 'insights/meta' },
+            create_report => { path => 'insights/report', method => 'POST' },
+
+            # integration URLS
+            integration_urls       => {},
+            integration_url        => { path => 'integration_url/:id' },
+            create_integration_url => { method => 'POST' },
+            update_integration_url =>
+                { path => 'integration_urls/:id', method => 'PATCH' },
+            delete_integration_url =>
+                { path => 'integration_urls/:id', method => 'DELETE' },
+
+            # jobs
+            jobs       => {},
+            job        => { path => 'jobs/:id' },
+            create_job => { method => 'POST' },
+
+            # labels
+            labels       => {},
+            label        => { path => 'labels/:id' },
+            create_label => { method => 'POST', mandatory => ['name'] },
+            update_label => { path => 'labels/:id' },
+            delete_label => { path => 'labels/:id', method => 'PATCH' },
 
             # macros
-            macros => { path => 'macros' },
-            macro  => { path => 'macros/:id' },
-            create_macro =>
-                { method => 'POST', path => 'macros', mandatory => ['name'], },
-            update_macro => { method => 'PUT', path => 'macros/:id' },
-            delete_macro => {
-                method => 'DELETE',
-                path   => 'macros/:id',
+            macros       => {},
+            macro        => { path => 'macros/:id' },
+            create_macro => { method => 'POST' },
+            update_macro => { path => 'macros/:id', method => 'PATCH' },
+            delete_macro => { path => 'macros/:id', method => 'DELETE' },
+            actions => { path => 'macros/:macro_id/actions' },
+            action  => { path => 'macros/:macro_id/actions/:id' },
+            update_action =>
+                { path => 'macros/:macro_id/actions/:id', method => 'PATCH' },
+
+            # rules
+            rules => {},
+            rule  => { path => 'rules/:id' },
+
+            # site settings
+            site_settings => {},
+            site_setting  => { path => 'site_settings/:id' },
+
+            # system message
+            system_message => {},
+
+            # topics
+            topics       => {},
+            topic        => { path => 'topics/:id' },
+            create_topic => { method => 'POST', mandatory => ['name'] },
+            update_topic => { path => 'topics/:id', method => 'PATCH' },
+            delete_topic => { path => 'topics/:id', method => 'DELETE' },
+            topic_translations => { path => 'topics/:id/translations' },
+            topic_translation  => { path => 'topics/:id/translations/:locale' },
+            create_topic_translation => {
+                path      => 'topics/:id/translations',
+                method    => 'POST',
+                mandatory => ['locale']
+            },
+            update_topic_translation => {
+                path   => 'topics/:id/translations/:locale',
+                method => 'PATCH'
+            },
+            delete_topic_translation => {
+                path   => 'topics/:id/translations/:locale',
+                method => 'DELETE'
             },
 
-            # macro actions
-            macro_actions       => { path => 'macros/:id/actions', },
-            macro_action        => { path => 'macros/:id/actions/:slug', },
-            update_macro_action => {
-                method => 'PUT',
-                path   => 'macros/:id/actions/:action_type',
+            # twitter
+            twitter_accounts => {},
+            twitter_account  => { path => 'twitter_accounts/:id' },
+            tweets           => { path => 'twitter_accounts/:id/tweets' },
+            tweet => { path => 'twitter_accounts/:account_id/tweets/:id' },
+            create_tweet => {
+                path      => 'twitter_accounts/:id/tweets',
+                method    => 'POST',
+                mandatory => ['body']
             },
+
+            # users
+            users            => {},
+            user             => { path => 'users/:id' },
+            user_preferences => { path => 'users/:id/preferences' },
+            user_preference  => { path => 'users/:user_id/preferences/:id' },
+            update_user_preference =>
+                { path => 'users/:user_id/preferences/:id', method => 'PATCH' },
         };
     },
 );
@@ -153,8 +467,7 @@ sub BUILD {
 
     $self->user_agent(__PACKAGE__ . ' ' . $WebService::Desk::VERSION);
     $self->content_type('application/json');
-    $self->extension('json');
-    $self->base_url('https://' . $self->user . '.desk.com/api/v1');
+    $self->base_url('https://' . $self->user . '.desk.com/api/v2');
     $self->auth_type('oauth_params');
 
     return $self;
