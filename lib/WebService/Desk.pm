@@ -271,11 +271,12 @@ has 'commands' => (
             cases       => {},
             case        => { path => 'cases/:id' },
             search_case => { path => 'cases/search' },
-            create_case => { method => 'POST', mandatory => ['message'] },
+            create_case =>
+                { path => 'cases', method => 'POST', mandatory => ['message'] },
             update_case => { path => 'cases/:id', method => 'PATCH' },
-            history      => { path => 'cases/:id/history' },
-            message      => { path => 'cases/:id/message' },
-            replies      => { path => 'cases/:id/replies' },
+            history     => { path => 'cases/:id/history' },
+            message     => { path => 'cases/:id/message' },
+            replies     => { path => 'cases/:id/replies' },
             reply        => { path => 'cases/:case_id/replies/:id' },
             create_reply => {
                 path      => 'cases/:case_id/replies',
@@ -327,7 +328,11 @@ has 'commands' => (
             # companies
             companies      => {},
             company        => { path => 'companies/:id' },
-            create_company => { method => 'POST', mandatory => ['name'] },
+            create_company => {
+                path      => 'companies',
+                method    => 'POST',
+                mandatory => ['name']
+            },
             update_company => { path => 'companies/:id', method => 'PATCH' },
 
             # custom fields
@@ -338,7 +343,7 @@ has 'commands' => (
             customers       => {},
             customer        => { path => 'customers/:id' },
             search_customer => { path => 'customers/search' },
-            create_customer => { method => 'POST' },
+            create_customer => { path => 'customers', method => 'POST' },
             update_customer => { path => 'customers/:id', method => 'PATCH' },
 
             # filters
@@ -361,9 +366,10 @@ has 'commands' => (
             create_report => { path => 'insights/report', method => 'POST' },
 
             # integration URLS
-            integration_urls       => {},
-            integration_url        => { path => 'integration_url/:id' },
-            create_integration_url => { method => 'POST' },
+            integration_urls => {},
+            integration_url  => { path => 'integration_urls/:id' },
+            create_integration_url =>
+                { path => 'integration_urls', method => 'POST' },
             update_integration_url =>
                 { path => 'integration_urls/:id', method => 'PATCH' },
             delete_integration_url =>
@@ -372,19 +378,20 @@ has 'commands' => (
             # jobs
             jobs       => {},
             job        => { path => 'jobs/:id' },
-            create_job => { method => 'POST' },
+            create_job => { path => 'jobs', method => 'POST' },
 
             # labels
-            labels       => {},
-            label        => { path => 'labels/:id' },
-            create_label => { method => 'POST', mandatory => ['name'] },
+            labels => {},
+            label  => { path => 'labels/:id' },
+            create_label =>
+                { path => 'labels', method => 'POST', mandatory => ['name'] },
             update_label => { path => 'labels/:id' },
             delete_label => { path => 'labels/:id', method => 'PATCH' },
 
             # macros
             macros       => {},
             macro        => { path => 'macros/:id' },
-            create_macro => { method => 'POST' },
+            create_macro => { path => 'macros', method => 'POST' },
             update_macro => { path => 'macros/:id', method => 'PATCH' },
             delete_macro => { path => 'macros/:id', method => 'DELETE' },
             actions => { path => 'macros/:macro_id/actions' },
@@ -404,9 +411,10 @@ has 'commands' => (
             system_message => {},
 
             # topics
-            topics       => {},
-            topic        => { path => 'topics/:id' },
-            create_topic => { method => 'POST', mandatory => ['name'] },
+            topics => {},
+            topic  => { path => 'topics/:id' },
+            create_topic =>
+                { path => 'topics', method => 'POST', mandatory => ['name'] },
             update_topic => { path => 'topics/:id', method => 'PATCH' },
             delete_topic => { path => 'topics/:id', method => 'DELETE' },
             topic_translations => { path => 'topics/:id/translations' },
