@@ -476,7 +476,8 @@ sub BUILD {
     $self->user_agent(__PACKAGE__ . ' ' . $WebService::Desk::VERSION);
     $self->content_type('application/json');
     $self->base_url('https://' . $self->user . '.desk.com/api/v2');
-    $self->auth_type('oauth_params');
+    $self->auth_type('oauth_header');
+    $self->oauth_post_body(0);
 
     return $self;
 }
