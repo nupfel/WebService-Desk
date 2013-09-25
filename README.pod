@@ -6,7 +6,7 @@ WebService::Desk - WebService::Desk - an interface to desk.com's RESTful Web API
 
 =head1 VERSION
 
-version 0.4
+version 0.5
 
 =head1 SYNOPSIS
 

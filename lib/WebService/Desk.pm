@@ -247,7 +247,11 @@ has 'commands' => (
             articles       => {},
             article        => { path => 'articles/:id' },
             create_article => { path => 'articles', method => 'POST' },
-            update_article => { path => 'articles/:id', method => 'PATCH' },
+            update_article => {
+                path    => 'articles/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
             delete_article => { path => 'articles/:id', method => 'DELETE' },
             search_article => {
                 path      => 'articles/search',
@@ -263,8 +267,9 @@ has 'commands' => (
                 mandatory => [ 'locale', 'subject' ]
             },
             update_article_translation => {
-                path   => 'articles/:id/translations/:locale',
-                method => 'PATCH'
+                path    => 'articles/:id/translations/:locale',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
             },
 
             # cases
@@ -273,18 +278,25 @@ has 'commands' => (
             search_case => { path => 'cases/search' },
             create_case =>
                 { path => 'cases', method => 'POST', mandatory => ['message'] },
-            update_case => { path => 'cases/:id', method => 'PATCH' },
-            history     => { path => 'cases/:id/history' },
-            message     => { path => 'cases/:id/message' },
-            replies     => { path => 'cases/:id/replies' },
+            update_case => {
+                path    => 'cases/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
+            history      => { path => 'cases/:id/history' },
+            message      => { path => 'cases/:id/message' },
+            replies      => { path => 'cases/:id/replies' },
             reply        => { path => 'cases/:case_id/replies/:id' },
             create_reply => {
                 path      => 'cases/:case_id/replies',
                 method    => 'POST',
                 mandatory => ['body'],
             },
-            update_reply =>
-                { path => 'cases/:case_id/replies/:id', method => 'PATCH' },
+            update_reply => {
+                path    => 'cases/:case_id/replies/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
             notes       => { path => 'cases/:case_id/notes' },
             note        => { path => 'cases/:case_id/notes/:id' },
             create_note => {
@@ -333,7 +345,11 @@ has 'commands' => (
                 method    => 'POST',
                 mandatory => ['name']
             },
-            update_company => { path => 'companies/:id', method => 'PATCH' },
+            update_company => {
+                path    => 'companies/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
 
             # custom fields
             custom_fields => {},
@@ -344,7 +360,11 @@ has 'commands' => (
             customer        => { path => 'customers/:id' },
             search_customer => { path => 'customers/search' },
             create_customer => { path => 'customers', method => 'POST' },
-            update_customer => { path => 'customers/:id', method => 'PATCH' },
+            update_customer => {
+                path    => 'customers/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
 
             # filters
             filters      => {},
@@ -370,8 +390,11 @@ has 'commands' => (
             integration_url  => { path => 'integration_urls/:id' },
             create_integration_url =>
                 { path => 'integration_urls', method => 'POST' },
-            update_integration_url =>
-                { path => 'integration_urls/:id', method => 'PATCH' },
+            update_integration_url => {
+                path    => 'integration_urls/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
             delete_integration_url =>
                 { path => 'integration_urls/:id', method => 'DELETE' },
 
@@ -386,18 +409,29 @@ has 'commands' => (
             create_label =>
                 { path => 'labels', method => 'POST', mandatory => ['name'] },
             update_label => { path => 'labels/:id' },
-            delete_label => { path => 'labels/:id', method => 'PATCH' },
+            delete_label => {
+                path    => 'labels/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
 
             # macros
             macros       => {},
             macro        => { path => 'macros/:id' },
             create_macro => { path => 'macros', method => 'POST' },
-            update_macro => { path => 'macros/:id', method => 'PATCH' },
+            update_macro => {
+                path    => 'macros/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
             delete_macro => { path => 'macros/:id', method => 'DELETE' },
-            actions => { path => 'macros/:macro_id/actions' },
-            action  => { path => 'macros/:macro_id/actions/:id' },
-            update_action =>
-                { path => 'macros/:macro_id/actions/:id', method => 'PATCH' },
+            actions       => { path => 'macros/:macro_id/actions' },
+            action        => { path => 'macros/:macro_id/actions/:id' },
+            update_action => {
+                path    => 'macros/:macro_id/actions/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
 
             # rules
             rules => {},
@@ -415,7 +449,11 @@ has 'commands' => (
             topic  => { path => 'topics/:id' },
             create_topic =>
                 { path => 'topics', method => 'POST', mandatory => ['name'] },
-            update_topic => { path => 'topics/:id', method => 'PATCH' },
+            update_topic => {
+                path    => 'topics/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
             delete_topic => { path => 'topics/:id', method => 'DELETE' },
             topic_translations => { path => 'topics/:id/translations' },
             topic_translation  => { path => 'topics/:id/translations/:locale' },
@@ -425,8 +463,9 @@ has 'commands' => (
                 mandatory => ['locale']
             },
             update_topic_translation => {
-                path   => 'topics/:id/translations/:locale',
-                method => 'PATCH'
+                path    => 'topics/:id/translations/:locale',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
             },
             delete_topic_translation => {
                 path   => 'topics/:id/translations/:locale',
@@ -449,8 +488,11 @@ has 'commands' => (
             user             => { path => 'users/:id' },
             user_preferences => { path => 'users/:id/preferences' },
             user_preference  => { path => 'users/:user_id/preferences/:id' },
-            update_user_preference =>
-                { path => 'users/:user_id/preferences/:id', method => 'PATCH' },
+            update_user_preference => {
+                path    => 'users/:user_id/preferences/:id',
+                method  => 'POST',
+                headers => { 'X-HTTP-Method-Override' => 'PATCH' },
+            },
         };
     },
 );
