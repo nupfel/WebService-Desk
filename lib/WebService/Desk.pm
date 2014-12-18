@@ -520,6 +520,7 @@ sub BUILD {
     $self->base_url('https://' . $self->user . '.desk.com/api/v2');
     $self->auth_type('oauth_header');
     $self->oauth_post_body(0);
+    $self->error_keys(['message']);
 
     return $self;
 }
